@@ -1,13 +1,10 @@
-# basic config
-master: localhost
-master_port: 54506
-root_dir: /tmp/salttest
-pki_dir: pki
-id: minion
-cachedir: cache
-acceptance_wait_time: 1
-open_mode: True
-log_file: minion
-order_masters: True
-interface: 0.0.0.0
-ret_port: 64506
+# Syndic Settings
+id: syndic
+interface: 127.0.0.1
+syndic_master: localhost
+syndic_master_port: 54506
+syndic_log_file: logs/syndic.log
+syndic_pidfile: run/syndic.pid
+tcp_pub_port: 64510
+tcp_pull_port: 64511
+sock_dir: syndic_sock

@@ -2,6 +2,8 @@
 Salt 0.9.3 Release Notes
 ========================
 
+:release: 2011-11-05
+
 Salt 0.9.3 is finally arrived. This is another big step forward for Salt, new
 features range from proper FreeBSD support to fixing issues seen when
 attaching a minion to a master over the Internet.
@@ -14,15 +16,11 @@ system has been greatly refined and many new features are available.
 Download!
 ---------
 
-The Salt source can be downloaded from the salt github site:
+The Salt source can be downloaded from PyPI:
 
-:download:`salt-0.9.3.tar.gz`
+https://pypi.python.org/packages/source/s/salt/salt-0.9.3.tar.gz
 
-Or from PiPy:
-
-http://pypi.python.org/packages/source/s/salt/salt-0.9.3.tar.gz
-
-For instructions on how to set up Salt please see the `installation`_
+For instructions on how to set up Salt please see the :ref:`installation`
 instructions.
 
 New Features
@@ -104,9 +102,9 @@ displays this new capability.
 Python State Renderer
 `````````````````````
 
-Until now Salt States could only be declared in yaml or json using jinja or
-mako. A new, very powerful, renderer has been added, making it possible to
-write Salt States in pure python:
+Until now Salt States could only be declared in yaml or json using Jinja or
+Mako. A new, very powerful, renderer has been added, making it possible to
+write Salt States in pure Python:
 
 .. code-block:: python
 
@@ -120,9 +118,9 @@ write Salt States in pure python:
                 'python-mako': {'pkg': ['installed']}}
 
 This renderer is used by making a run function that returns the Highstate data
-structure. Any capabilities of python can be used in pure python sls modules.
+structure. Any capabilities of Python can be used in pure Python sls modules.
 
-This example of a pure python sls module is the same as this example in yaml:
+This example of a pure Python sls module is the same as this example in yaml:
 
 .. code-block:: yaml
 
@@ -132,7 +130,7 @@ This example of a pure python sls module is the same as this example in yaml:
     python-mako:
       pkg:
         - installed
-                      
+
 FreeBSD Support
 ```````````````
 
@@ -168,13 +166,13 @@ File State Additions
 ````````````````````
 
 The file state has been given a number of new features, primarily the
-directory, recurse, symlink and absent functions.
+directory, recurse, symlink, and absent functions.
 
 file.directory
     Make sure that a directory exists and has the right permissions.
 
     .. code-block:: yaml
-    
+
         /srv/foo:
           file:
             - directory
@@ -186,7 +184,7 @@ file.symlink
     Make a symlink.
 
     .. code-block:: yaml
-    
+
         /var/lib/www:
           file:
             - symlink
@@ -196,22 +194,22 @@ file.symlink
 file.recurse
     The recurse state function will recursively download a directory on the
     master file server and place it on the minion. Any change in the files on
-    the master will be pushed to the minion. The recuse function is very
+    the master will be pushed to the minion. The recurse function is very
     powerful and has been tested by pushing out the full Linux kernel source.
 
     .. code-block:: yaml
-    
+
         /opt/code:
           file:
             - recurse
             - source: salt://linux
 
 file.absent
-    Make sure that the file is not on the system, recursively delets
-    directories, files and symlinks.
+    Make sure that the file is not on the system, recursively deletes
+    directories, files, and symlinks.
 
     .. code-block:: yaml
-    
+
         /etc/httpd/conf.d/somebogusfile.conf:
           file:
             - absent
@@ -285,4 +283,3 @@ authorized keys can be present or absent.
         - user: frank
         - enc: dsa
         - comment: 'Frank's key'
-

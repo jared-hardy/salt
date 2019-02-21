@@ -2,6 +2,8 @@
 Salt 0.9.7 Release Notes
 ========================
 
+:release: 2012-02-15
+
 Salt 0.9.7 is here! The latest iteration of Salt brings more features and many
 fixes. This release is a great refinement over 0.9.6, adding many conveniences
 under the hood, as well as some features that make working with Salt much
@@ -71,7 +73,7 @@ lookup_jid
 ``````````
 
 When jobs are executed the return data is sent back to the master and cached.
-By default is is cached for 24 hours, but this can be configured via the
+By default is cached for 24 hours, but this can be configured via the
 ``keep_jobs`` option in the master configuration.
 
 Using the ``lookup_jid`` runner will display the same return data that the
@@ -97,7 +99,7 @@ to another environment.
 
 An external node classification can be set in the master configuration file via
 the ``external_nodes`` option:
-http://salt.readthedocs.org/en/latest/ref/configuration/master.html#external-nodes
+https://salt.readthedocs.io/en/latest/ref/configuration/master.html#external-nodes
 
 External nodes are loaded in addition to the top files. If it is intended to
 only use external nodes, do not deploy any top files.
@@ -176,4 +178,3 @@ Previously the nodegroups defined in the master configuration file could not
 be used to match nodes for states. The nodegroups support has been expanded
 and the nodegroups defined in the master configuration can now be used to
 match minions in the top file.
-

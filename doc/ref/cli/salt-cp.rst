@@ -2,82 +2,79 @@
 ``salt-cp``
 ===========
 
-Copy a file to a set of systems
+Copy a file or files to one or more minions
 
 Synopsis
 ========
 
-::
+.. code-block:: bash
 
-    salt-cp '*' [ options ] SOURCE DEST
+    salt-cp '*' [ options ] SOURCE [SOURCE2 SOURCE3 ...] DEST
 
-    salt-cp -E '.*' [ options ] SOURCE DEST
+    salt-cp -E '.*' [ options ] SOURCE [SOURCE2 SOURCE3 ...] DEST
 
-    salt-cp -G 'os:Arch.*' [ options ] SOURCE DEST
+    salt-cp -G 'os:Arch.*' [ options ] SOURCE [SOURCE2 SOURCE3 ...] DEST
 
 Description
 ===========
 
-Salt copy copies a local file out to all of the salt minions matched by the
-given target.
+salt-cp copies files from the master to all of the Salt minions matched by the
+specified target expression.
+
+.. note::
+    salt-cp uses Salt's publishing mechanism. This means the privacy of the
+    contents of the file on the wire is completely dependent upon the transport
+    in use. In addition, if the master or minion is running with debug logging,
+    the contents of the file will be logged to disk.
+
+    In addition, this tool is less efficient than the Salt fileserver when
+    copying larger files. It is recommended to instead use
+    :py:func:`cp.get_file <salt.modules.cp.get_file>` to copy larger files to
+    minions. However, this requires the file to be located within one of the
+    fileserver directories.
+
+.. versionchanged:: 2016.3.7,2016.11.6,2017.7.0
+    Compression support added, disable with ``-n``. Also, if the destination
+    path ends in a path separator (i.e. ``/``,  or ``\`` on Windows, the
+    desitination will be assumed to be a directory. Finally, recursion is now
+    supported, allowing for entire directories to be copied.
+
+.. versionchanged:: 2016.11.7,2017.7.2
+    Reverted back to the old copy mode to preserve backward compatibility. The
+    new functionality added in 2016.6.6 and 2017.7.0 is now available using the
+    ``-C`` or ``--chunked`` CLI arguments. Note that compression, recursive
+    copying, and support for copying large files is only available in chunked
+    mode.
 
 Options
 =======
 
 .. program:: salt-cp
 
-.. option:: -h, --help
+.. include:: _includes/common-options.rst
 
-    Print a usage message briefly summarizing these command-line options
+.. include:: _includes/timeout-option.rst
+.. |timeout| replace:: 5
 
-.. option:: -t TIMEOUT, --timeout=TIMEOUT
+.. include:: _includes/logging-options.rst
+.. |logfile| replace:: /var/log/salt/master
+.. |loglevel| replace:: ``warning``
 
-    The timeout in seconds to wait for replies from the salt minions.
+.. include:: _includes/target-selection.rst
 
-.. option:: -E, --pcre
 
-    The target expression will be interpreted as a pcre regular expression
-    rather than a shell glob.
+.. option:: -C, --chunked
 
-.. option:: -L, --list
+    Use new chunked mode to copy files. This mode supports large files, recursive
+    directories copying and compression.
 
-    The target expression will be interpreted as a comma delimited list,
-    example: server1.foo.bar,server2.foo.bar,example7.quo.qux
+    .. versionadded:: 2016.11.7,2017.7.2
 
-.. option:: -G, --grain
+.. option:: -n, --no-compression
 
-    The target expression matches values returned by the salt grains system on
-    the minions. The target expression is in the format of '<grain value>:<glob
-    expression>'; example: 'os:Arch*'
+    Disable gzip compression in chunked mode.
 
-.. option:: --grain-pcre
-
-    The target expression matches values returned by the salt grains system on
-    the minions. The target expression is in the format of '<grain value>:<pcre
-    regular expression>'; example: 'os:Arch.*'
-
-.. option:: -R, --range
-
-    Instead of using shell globs to evaluate the target use a range expression
-    to identify targets. Range expressions look like %cluster.
-
-    Using the Range option requires that a range server is set up and the
-    location of the range server is referenced in the master configuration
-    file.
-
-.. option:: -C, --compound
-
-    Utilize many target definitions to make the call very granular. This option
-    takes a group of targets separated by and or or. The default matcher is a
-    glob as usual, if something other than a glob is used preface it with the
-    letter denoting the type, example: 'webserv* and G@os:Debian or E@db*'
-    make sure that the compound target is encapsulated in quotes.
-
-.. option:: -c CONFIG, --config=CONFIG
-
-    The location of the salt master configuration file, the salt master
-    settings are required to know where the connections are;
-    default=/etc/salt/master
+    .. versionadded:: 2016.3.7,2016.11.6,2017.7.0
 
 See also
 ========

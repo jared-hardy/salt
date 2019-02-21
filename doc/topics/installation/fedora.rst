@@ -1,25 +1,27 @@
-==================================
-Fedora & CentOS / Enterprise Linux
-==================================
+======
+Fedora
+======
 
 Beginning with version 0.9.4, Salt has been available in the primary Fedora
-repositories and EPEL. It is installable using yum. Fedora will have more
-up to date versions of Salt than other members of the Red Hat family, which
-makes it a great place to help improve Salt!
+repositories and `EPEL`_. It is installable using ``yum`` or ``dnf``, depending
+on your version of Fedora.
 
-.. admonition:: CentOS / RHEL 5
+.. note::
 
-    Salt and all dependencies have been *finally* accepted into the yum
-    reposities for EPEL5 and EPEL6. Currently, the latest is in epel-testing
-    while awaiting promotion to epel proper. You can install it via:
+    Released versions of Salt starting with ``2015.5.2`` through ``2016.3.2``
+    do not have Fedora packages available though `EPEL`_. To install a version
+    of Salt within this release array, please use SaltStack's `Bootstrap Script`_
+    and use the git method of installing Salt using the version's associated
+    release tag.
 
-    .. code-block:: bash
+    Release ``2016.3.3`` and onward will have packaged versions available via
+    `EPEL`_.
 
-        yum --enablerepo=epel-testing install salt
-
-    On RHEL6, the proper jinja packages were moved from EPEL to the
-    "RHEL Server Optional Channel". Verify this repository is enabled before
-    installing salt on RHEL6.
+**WARNING**: Fedora 19 comes with systemd 204.  Systemd has known bugs fixed in
+later revisions that prevent the salt-master from starting reliably or opening
+the network connections that it needs to.  It's not likely that a salt-master
+will start or run reliably on any distribution that uses systemd version 204 or
+earlier.  Running salt-minions should be OK.
 
 Installation
 ============
@@ -30,181 +32,92 @@ repositories.
 Stable Release
 --------------
 
-Salt is packaged separately for the minion and the master. You'll only need to
-install the appropriate package for the role you need the machine to play. This
-means you're going to want one master and a whole bunch of minions!
+Salt is packaged separately for the minion and the master. It is necessary only to
+install the appropriate package for the role the machine will play. Typically, there
+will be one master and multiple minions.
 
 .. code-block:: bash
 
     yum install salt-master
     yum install salt-minion
 
-Configuration
-=============
+Installing from ``updates-testing``
+-----------------------------------
 
-Below, we'll cover Salt Master and Minion configuration options.
+When a new Salt release is packaged, it is first admitted into the
+``updates-testing`` repository, before being moved to the stable repo.
 
-Master Configuration
-====================
+To install from ``updates-testing``, use the ``enablerepo`` argument for yum:
 
-This section outlines configuration of a Salt Master, which is used to control
-other machines known as "minions" (see "Minion Configuration" for instructions
-on configuring a minion). This will outline IP configuration, and a few key
-configuration paths.
+.. code-block:: bash
 
-**Interface**
+    yum --enablerepo=updates-testing install salt-master
+    yum --enablerepo=updates-testing install salt-minion
 
-By default the Salt master listens on ports ``4505`` and ``4506`` on all interfaces
-(0.0.0.0). If you have a need to bind Salt to a specific IP, redefine the
-"interface" directive as seen here:
+Installation Using pip
+======================
 
-.. code-block:: diff
+Since Salt is on `PyPI`_, it can be installed using pip, though most users
+prefer to install using a package manager.
 
-   - #interface: 0.0.0.0
-   + interface: 10.0.0.1
+Installing from pip has a few additional requirements:
 
-**Enable the Master**
+* Install the group 'Development Tools', ``dnf groupinstall 'Development Tools'``
+* Install the 'zeromq-devel' package if it fails on linking against that
+  afterwards as well.
 
-You'll also likely want to activate the Salt Master in systemd, configuring the
-Salt Master to start automatically at boot.
+A pip install does not make the init scripts or the /etc/salt directory, and you
+will need to provide your own systemd service unit.
+
+Installation from pip:
+
+.. code-block:: bash
+
+    pip install salt
+
+.. warning::
+
+    If installing from pip (or from source using ``setup.py install``), be
+    advised that the ``yum-utils`` package is needed for Salt to manage
+    packages. Also, if the Python dependencies are not already installed, then
+    you will need additional libraries/tools installed to build some of them.
+    More information on this can be found :ref:`here
+    <installing-for-development>`.
+
+
+Post-installation tasks
+=======================
+
+**Master**
+
+To have the Master start automatically at boot time:
 
 .. code-block:: bash
 
     systemctl enable salt-master.service
 
-**Start the Master**
-
-Once you've completed all of these steps you're ready to start your Salt
-Master. You should be able to start your Salt Master now using the command
-seen here:
+To start the Master:
 
 .. code-block:: bash
 
     systemctl start salt-master.service
 
-If your Salt Master doesn't start successfully, go back through each step and
-see if anything was missed. Salt doesn't take much configuration (part of its
-beauty!), and errors are usually simple mistakes.
+**Minion**
 
-Minion Configuration
-====================
-
-Configuring a Salt Minion is surprisingly simple. Unless you have a real need
-for customizing your minion configuration (which there are plenty of options if
-you are so inclined!), there is one simple directive that needs to be updated.
-That option is the location of the master.
-
-By default a Salt Minion will try to connect to the dns name "salt". If you
-have the ability to update DNS records for your domain you might create an A or
-CNAME record for "salt" that points to your Salt Master. If you are able to do
-this you likely can do without any minion configuration at all.
-
-If you are not able to update DNS, you'll simply need to update one entry in
-the configuration file. Using your favorite editor, open the minion
-configuration file and update the "master" entry as seen here:
-
-.. code-block:: diff
-
-   - #master: salt
-   + master: 10.0.0.1
-
-Simply update the master directive to the IP or hostname of your Salt Master.
-Save your changes and you're ready to start your Salt Minion. Advanced
-configuration options are covered in another chapter.
-
-**Enable the Minion**
-
-You'll need to configure the minion to auto-start at boot. You can toggle
-that option through systemd.
+To have the Minion start automatically at boot time:
 
 .. code-block:: bash
 
     systemctl enable salt-minion.service
 
-**Start the Minion**
-
-Once you've completed all of these steps, start the Minion. This command
-should do the trick:
+To start the Minion:
 
 .. code-block:: bash
 
     systemctl start salt-minion.service
 
-If your Salt Minion doesn't start successfully, go back through each step and
-see if anything was missed. Salt doesn't take much configuration (part of its
-beauty!), and errors are usually simple mistakes.
+Now go to the :ref:`Configuring Salt<configuring-salt>` page.
 
-Tying It All Together
-======================
-
-If you've successfully completed each of the steps above you should have a
-running Salt Master and a running Salt Minion. The Minion should be configured
-to point to the Master. To verify that there is communication flowing between
-the Minion and Master we'll run a few initial ``salt`` commands. These commands
-will validate the Minions RSA encryption key, and then send a test command to
-the Minion to ensure that commands and responses are flowing as expected.
-
-**Key Management**
-
-Salt uses AES encryption for all communication between the Master and the
-Minion. This ensures that the commands you send to your Minions (your cloud)
-can not be tampered with, and that communication between Master and Minion is
-only done through trusted, accepted keys.
-
-Before you'll be able to do any remote execution or configuration management
-you'll need to accept any pending keys on the Master. Run the ``salt-key``
-command to list the keys known to the Salt Master:
-
-.. code-block:: bash
-
-   [root@master ~]# salt-key -L
-   Unaccepted Keys:
-   alpha
-   bravo
-   charlie
-   delta
-   Accepted Keys:
-
-This example shows that the Salt Master is aware of four Minions, but none of
-the keys have been accepted. To accept the keys and allow the Minions to be
-controlled by the Master, again use the ``salt-key`` command:
-
-.. code-block:: bash
-
-   [root@master ~]# salt-key -A
-   [root@master ~]# salt-key -L
-   Unaccepted Keys:
-   Accepted Keys:
-   alpha
-   bravo
-   charlie
-   delta
-
-The ``salt-key`` command allows for signing keys individually or in bulk. The
-example above, using ``-A`` bulk-accepts all pending keys. To accept keys
-individually use the lowercase of the same option, ``-a keyname``.
-
-Sending Commands
-================
-
-Everything should be set for you to begin remote management of your Minions.
-Whether you have a few or a few-dozen, Salt can help you manage them easily!
-
-For final verification, send a test function from your Salt Master to your
-minions. If all of your minions are properly communicating with your Master,
-you should "True" responses from each of them. See the example below to send
-the ``test.ping`` remote command:
-
-.. code-block:: bash
-
-   [root@master ~]# salt '*' test.ping
-   {'alpha': True}
-
-Where Do I Go From Here
-========================
-
-Congratulations! You've successfully configured your first Salt Minions and are
-able to send remote commands. I'm sure you're eager to learn more about what
-Salt can do. Depending on the primary way you want to manage your machines you
-may either want to visit the section regarding Salt States, or the section on
-Modules.
+.. _`Bootstrap Script`: https://github.com/saltstack/salt-bootstrap
+.. _`EPEL`: http://fedoraproject.org/wiki/EPEL
+.. _`PyPI`: https://pypi.python.org/pypi/salt

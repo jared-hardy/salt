@@ -1,15 +1,19 @@
 .. _all-salt.modules:
 
-============================
-Full list of builtin modules
-============================
+=================
+execution modules
+=================
 
 .. admonition:: Virtual modules
 
     .. toctree::
 
+        salt.modules.group
+        salt.modules.kernelpkg
         salt.modules.pkg
-        salt.modules.sys
+        salt.modules.service
+        salt.modules.shadow
+        salt.modules.user
 
 .. currentmodule:: salt.modules
 
@@ -17,71 +21,502 @@ Full list of builtin modules
     :toctree:
     :template: autosummary.rst.tmpl
 
+    acme
+    aix_group
+    aliases
+    alternatives
+    ansiblegate
     apache
-    apt
+    apcups
+    apf
+    apk
+    aptpkg
     archive
-    butterkvm
-    cluster
+    arista_pyeapi
+    artifactory
+    at
+    at_solaris
+    augeas_cfg
+    aws_sqs
+    bamboohr
+    bcache
+    beacons
+    bigip
+    bluecoat_sslv
+    bluez
+    boto3_elasticache
+    boto3_route53
+    boto_apigateway
+    boto_asg
+    boto_cfn
+    boto_cloudfront
+    boto_cloudtrail
+    boto_cloudwatch
+    boto_cloudwatch_event
+    boto_cognitoidentity
+    boto_datapipeline
+    boto_dynamodb
+    boto_ec2
+    boto_efs
+    boto_elasticache
+    boto_elasticsearch_domain
+    boto_elb
+    boto_elbv2
+    boto_iam
+    boto_iot
+    boto_kinesis
+    boto_kms
+    boto_lambda
+    boto_rds
+    boto_route53
+    boto_s3_bucket
+    boto_secgroup
+    boto_sns
+    boto_sqs
+    boto_vpc
+    bower
+    bridge
+    bsd_shadow
+    btrfs
+    cabal
+    capirca_acl
+    cassandra
+    cassandra_cql
+    celery
+    ceph
+    chassis
+    chef
+    chocolatey
+    chronos
+    cimc
+    ciscoconfparse_mod
+    cisconso
+    cloud
     cmdmod
+    composer
+    config
+    consul
+    container_resource
     cp
+    cpan
     cron
+    csf
+    cyg
+    daemontools
     data
+    datadog_api
+    ddns
+    deb_apache
+    deb_postgres
+    debbuild
     debconfmod
+    debian_ip
+    debian_service
+    defaults
+    devmap
+    dig
     disk
-    django
+    djangomod
+    dnsmasq
+    dnsutil
+    dockercompose
+    dockermod
+    dpkg
+    drac
+    dracr
+    drbd
+    dummyproxy_package
+    dummyproxy_service
     ebuild
+    eix
+    elasticsearch
+    environ
+    eselect
+    esxi
+    etcd_mod
+    ethtool
+    event
+    extfs
     file
+    firewalld
+    freebsd_sysctl
+    freebsd_update
+    freebsdjail
     freebsdkmod
     freebsdpkg
+    freebsdports
     freebsdservice
     gem
+    genesis
     gentoo_service
+    gentoolkitmod
     git
+    github
+    glance
+    glanceng
+    glusterfs
+    gnomedesktop
+    google_chat
+    gpg
+    grafana4
     grains
     groupadd
+    grub_legacy
+    guestfs
+    hadoop
+    haproxyconn
+    hashutil
+    heat
     hg
+    hipchat
     hosts
+    htpasswd
+    http
+    ifttt
+    ilo
+    icinga2
+    incron
+    influx
+    influx08
+    infoblox
+    ini_manage
+    inspectlib
+    inspectlib.collector
+    inspectlib.dbhandle
+    inspectlib.entities
+    inspectlib.exceptions
+    inspectlib.fsdb
+    inspectlib.kiwiproc
+    inspectlib.query
+    inspector
+    introspect
+    iosconfig
+    ipmi
+    ipset
+    iptables
+    iwtools
+    jboss7
+    jboss7_cli
+    jenkinsmod
+    jinja
+    jira_mod
+    junos
+    k8s
+    kapacitor
+    kerberos
+    kernelpkg_linux_apt
+    kernelpkg_linux_yum
+    key
+    keyboard
+    keystone
+    keystoneng
     kmod
-    kvm_hyper
+    kubernetes
+    launchctl
+    layman
+    ldap3
+    ldapmod
+    libcloud_compute
+    libcloud_dns
+    libcloud_loadbalancer
+    libcloud_storage
+    linux_acl
+    linux_ip
+    linux_lvm
     linux_sysctl
+    localemod
+    locate
+    logadm
+    logmod
+    logrotate
+    lvs
+    lxc
+    lxd
+    mac_assistive
+    mac_brew
+    mac_defaults
+    mac_desktop
+    mac_group
+    mac_keychain
+    mac_package
+    mac_pkgutil
+    mac_ports
+    mac_power
+    mac_service
+    mac_shadow
+    mac_softwareupdate
+    mac_sysctl
+    mac_system
+    mac_timezone
+    mac_user
+    mac_xattr
+    makeconf
+    mandrill
+    marathon
+    match
+    mattermost
     mdadm
+    mdata
+    memcached
+    mine
+    minion
+    mod_random
+    modjk
+    mongodb
+    monit
     moosefs
     mount
+    mssql
+    msteams
+    munin
     mysql
+    nacl
+    nagios
+    nagios_rpc
+    namecheap_dns
+    namecheap_domains
+    namecheap_ns
+    namecheap_ssl
+    namecheap_users
+    napalm_acl
+    napalm_bgp
+    napalm_formula
+    napalm_mod
+    napalm_network
+    napalm_ntp
+    napalm_probes
+    napalm_route
+    napalm_snmp
+    napalm_users
+    napalm_yang_mod
+    netaddress
+    netbox
+    netbsd_sysctl
+    netbsdservice
+    netmiko_mod
+    netscaler
     network
+    neutron
+    neutronng
+    nfs3
+    nftables
     nginx
+    nilrt_ip
+    nix
+    nova
+    npm
+    nspawn
+    nxos
+    nxos_api
+    omapi
+    openbsd_sysctl
+    openbsdpkg
+    openbsdrcctl
+    openbsdservice
+    openscap
+    openstack_config
+    openstack_mng
+    openvswitch
+    opkg
+    opsgenie
+    oracle
+    osquery
+    out
     pacman
+    pagerduty
+    pagerduty_util
+    pam
+    panos
+    parallels
+    parted
+    pcs
+    pdbedit
+    pecl
+    peeringdb
+    pf
+    philips_hue
     pillar
     pip
+    pkg_resource
+    pkgin
+    pkgng
+    pkgutil
+    portage_config
+    postfix
+    postgres
+    poudriere
+    powerpath
+    proxy
     ps
     publish
     puppet
+    purefa
+    purefb
+    pushbullet
+    pushover_notify
     pw_group
     pw_user
+    pyenv
+    qemu_img
+    qemu_nbd
+    quota
+    rabbitmq
+    rallydev
+    random_org
+    rbac_solaris
+    rbenv
+    rdp
+    redismod
+    reg
+    rest_package
+    rest_sample_utils
+    rest_service
+    restartcheck
+    ret
     rh_ip
     rh_service
+    riak
+    rpm
+    rpmbuild
+    rsync
+    runit
     rvm
+    s3
+    s6
+    salt_proxy
+    saltcheck
+    saltcloudmod
     saltutil
+    schedule
+    scp_mod
+    scsi
+    sdb
+    seed
     selinux
+    sensehat
+    sensors
+    serverdensity_device
     service
+    servicenow
     shadow
+    slack_notify
+    slsutil
+    smartos_imgadm
+    smartos_nictagadm
+    smartos_virt
+    smartos_vmadm
+    smbios
+    smf
+    smtp
+    solaris_fmadm
+    solaris_group
+    solaris_shadow
+    solaris_system
+    solaris_user
+    solarisips
+    solarispkg
     solr
+    solrcloud
+    splunk
+    splunk_search
+    sqlite3
     ssh
+    ssh_package
+    ssh_service
+    snap
+    snapper
     state
     status
+    statuspage
+    supervisord
+    suse_apache
+    svn
+    swarm
+    swift
+    sysbench
+    sysfs
+    syslog_ng
+    sysmod
+    sysrc
+    system
+    system_profiler
     systemd
+    telegram
+    telemetry
+    temp
     test
+    testinframod
+    test_virtual
+    textfsm_mod
+    timezone
+    tls
     tomcat
+    trafficserver
+    travisci
+    tuned
+    twilio_notify
+    udev
     upstart
+    uptime
     useradd
+    uwsgi
+    vagrant
+    varnish
+    vault
+    vbox_guest
+    vboxmanage
+    victorops
     virt
-    virtualenv
+    virtualenv_mod
+    vmctl
+    vsphere
+    win_autoruns
+    win_certutil
+    win_dacl
     win_disk
+    win_dism
+    win_dns_client
+    win_dsc
     win_file
+    win_firewall
+    win_groupadd
+    win_iis
+    win_ip
+    win_lgpo
+    win_license
     win_network
+    win_ntp
+    win_path
+    win_pkg
+    win_pki
+    win_powercfg
+    win_psget
+    win_repo
+    win_servermanager
     win_service
     win_shadow
+    win_smtp_server
+    win_snmp
+    win_status
+    win_system
+    win_task
+    win_timezone
     win_useradd
+    win_wua
+    x509
+    xapi
+    xbpspkg
+    xfs
+    xmpp
     yumpkg
-    yumpkg5
+    zabbix
+    zcbuildout
+    zenoss
+    zfs
+    zk_concurrency
+    znc
+    zoneadm
+    zonecfg
+    zookeeper
+    zpool
     zypper

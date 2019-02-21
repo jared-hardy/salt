@@ -1,6 +1,6 @@
+# -*- coding: utf-8 -*-
 '''
-Aliases File Management
-=======================
+Configuration of email aliases
 
 The mail aliases file can be managed to contain definitions for specific email
 aliases:
@@ -8,15 +8,33 @@ aliases:
 .. code-block:: yaml
 
     username:
-      alias:
-        - present
+      alias.present:
         - target: user@example.com
+
+.. code-block:: yaml
+
+    thomas:
+      alias.present:
+        - target: thomas@example.com
+
+The default alias file is set to ``/etc/aliases``, as defined in Salt's
+:mod:`config execution module <salt.modules.config>`. To change the alias
+file from the default location, set the following in your minion config:
+
+.. code-block:: yaml
+
+    aliases.file: /my/alias/file
+
 '''
+from __future__ import absolute_import, print_function, unicode_literals
 
 
 def present(name, target):
     '''
-    Ensures that the named alias is present with the given target
+    Ensures that the named alias is present with the given target or list of
+    targets. If the alias exists but the target differs from the previous
+    entry, the target(s) will be overwritten. If the alias does not exist, the
+    alias will be created.
 
     name
         The local user/address to assign an alias to
@@ -45,7 +63,7 @@ def present(name, target):
         return ret
     else:
         ret['result'] = False
-        ret['comment'] = 'Failed to set alias'
+        ret['comment'] = 'Failed to set alias {0} -> {1}'.format(name, target)
         return ret
 
 
@@ -75,5 +93,5 @@ def absent(name):
         return ret
     else:
         ret['result'] = False
-        ret['comment'] = 'Failed to remove alias'
+        ret['comment'] = 'Failed to remove alias {0}'.format(name)
         return ret

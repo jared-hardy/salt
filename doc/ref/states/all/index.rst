@@ -1,8 +1,8 @@
 .. _all-salt.states:
 
-===========================
-Full list of builtin states
-===========================
+=============
+state modules
+=============
 
 .. currentmodule:: salt.states
 
@@ -10,25 +10,322 @@ Full list of builtin states
     :toctree:
     :template: autosummary.rst.tmpl
 
+    acme
     alias
+    alternatives
+    ansiblegate
+    apache
+    apache_conf
+    apache_module
+    apache_site
+    aptpkg
+    archive
+    artifactory
+    at
+    augeas
+    aws_sqs
+    beacon
+    bigip
+    blockdev
+    bluecoat_sslv
+    boto3_elasticache
+    boto3_route53
+    boto_apigateway
+    boto_asg
+    boto_cfn
+    boto_cloudfront
+    boto_cloudtrail
+    boto_cloudwatch_alarm
+    boto_cloudwatch_event
+    boto_cognitoidentity
+    boto_datapipeline
+    boto_dynamodb
+    boto_ec2
+    boto_elasticache
+    boto_elasticsearch_domain
+    boto_elb
+    boto_elbv2
+    boto_iam
+    boto_iam_role
+    boto_iot
+    boto_kinesis
+    boto_kms
+    boto_lambda
+    boto_lc
+    boto_rds
+    boto_route53
+    boto_s3_bucket
+    boto_secgroup
+    boto_sns
+    boto_sqs
+    boto_vpc
+    bower
+    cabal
+    ceph
+    chef
+    chocolatey
+    chronos_job
+    cimc
+    cisconso
+    cloud
     cmd
+    composer
+    consul
     cron
+    csf
+    cyg
+    ddns
+    debconfmod
+    dellchassis
+    disk
+    docker_container
+    docker_image
+    docker_network
+    docker_volume
+    drac
+    elasticsearch
+    elasticsearch_index
+    elasticsearch_index_template
+    environ
+    eselect
+    etcd_mod
+    ethtool
+    esxi
+    event
     file
+    firewall
+    firewalld
     gem
+    git
+    github
+    glance
+    glance_image
+    glusterfs
+    gnomedesktop
+    gpg
+    grafana
+    grafana4_dashboard
+    grafana4_datasource
+    grafana4_org
+    grafana4_user
+    grafana_dashboard
+    grafana_datasource
+    grains
     group
+    heat
+    hg
+    hipchat
     host
+    htpasswd
+    http
+    icinga2
+    ifttt
+    incron
+    influxdb08_database
+    influxdb08_user
+    influxdb_continuous_query
+    influxdb_database
+    influxdb_retention_policy
+    influxdb_user
+    infoblox_a
+    infoblox_cname
+    infoblox_host_record
+    infoblox_range
+    ini_manage
+    ipmi
+    ipset
+    iptables
+    jboss7
+    jenkins
+    junos
+    kapacitor
+    kernelpkg
+    keyboard
+    keystone
+    keystone_domain
+    keystone_endpoint
+    keystone_group
+    keystone_project
+    keystone_role
+    keystone_role_grant
+    keystone_service
+    keystone_user
     kmod
+    kubernetes
+    layman
+    ldap
+    libcloud_dns
+    libcloud_loadbalancer
+    libcloud_storage
+    linux_acl
+    locale
+    logadm
+    logrotate
+    loop
+    lvm
+    lvs_server
+    lvs_service
+    lxc
+    mac_assistive
+    mac_defaults
+    mac_keychain
+    mac_package
+    mac_xattr
+    makeconf
+    marathon_app
+    mdadm
+    memcached
+    modjk
+    modjk_worker
+    module
+    mongodb_database
+    mongodb_user
+    monit
     mount
+    msteams
     mysql_database
     mysql_grants
+    mysql_query
     mysql_user
+    netacl
+    netconfig
+    netntp
+    netsnmp
+    netusers
     network
-    pip
+    netyang
+    neutron_network
+    neutron_secgroup
+    neutron_secgroup_rule
+    neutron_subnet
+    nfs_export
+    nftables
+    npm
+    ntp
+    nxos
+    openstack_config
+    openvswitch_bridge
+    openvswitch_port
+    opsgenie
+    pagerduty
+    pagerduty_escalation_policy
+    pagerduty_schedule
+    pagerduty_service
+    pagerduty_user
+    panos
+    pcs
+    pecl
+    pdbedit
+    pip_state
     pkg
+    pkgbuild
+    pkgng
+    pkgrepo
+    portage_config
+    ports
+    postgres_cluster
     postgres_database
+    postgres_extension
+    postgres_group
+    postgres_initdb
+    postgres_language
+    postgres_privileges
+    postgres_schema
+    postgres_tablespace
+    postgres_user
+    powerpath
+    probes
+    process
+    proxy
+    pushover
+    pyenv
+    pyrax_queues
+    quota
+    rabbitmq_cluster
+    rabbitmq_plugin
+    rabbitmq_policy
+    rabbitmq_user
+    rabbitmq_vhost
+    rbac_solaris
+    rbenv
+    rdp
+    redismod
+    reg
+    rsync
     rvm
+    salt_proxy
+    saltmod
+    schedule
+    selinux
+    serverdensity_device
     service
+    slack
+    smartos
+    smtp
+    snap
+    snapper
+    solrcloud
+    splunk
+    splunk_search
+    sqlite3
     ssh_auth
+    ssh_known_hosts
+    stateconf
+    status
+    statuspage
+    supervisord
+    svn
     sysctl
+    syslog_ng
+    sysrc
+    telemetry_alert
+    test
+    testinframod
+    timezone
+    tls
+    tomcat
+    trafficserver
+    tuned
+    uptime
     user
-    virtualenv
+    vagrant
+    vault
+    vbox_guest
+    victorops
+    virt
+    virtualenv_mod
+    win_certutil
+    win_dacl
+    win_dism
+    win_dns_client
+    win_firewall
+    win_iis
+    win_lgpo
+    win_license
+    win_network
+    win_path
+    win_pki
+    win_powercfg
+    win_servermanager
+    win_smtp_server
+    win_snmp
+    win_system
+    win_wua
+    winrepo
+    x509
+    xmpp
+    zabbix_action
+    zabbix_host
+    zabbix_hostgroup
+    zabbix_mediatype
+    zabbix_template
+    zabbix_user
+    zabbix_usergroup
+    zabbix_valuemap
+    zcbuildout
+    zenoss
+    zk_concurrency
+    zfs
+    zone
+    zookeeper
+    zpool

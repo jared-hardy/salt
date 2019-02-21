@@ -1,53 +1,40 @@
+.. _table-of-contents:
+
 ======================
-Full Table of Contents
+Salt Table of Contents
 ======================
 
 .. toctree::
-    :maxdepth: 3
-    :glob:
+    :maxdepth: 2
 
     topics/index
+    topics/community/index
     topics/installation/index
-    topics/configuration
-    topics/targeting/index
-    topics/tutorials/modules
-    topics/tutorials/starting_states
-    topics/tutorials/states*
-    topics/tutorials/firewall
-    topics/tutorials/bootstrap_ec2
-    topics/pillar/index
-    topics/jobs/index
-    topics/troubleshooting/index
-    topics/troubleshooting/yaml_idiosyncrasies
-    topics/community
-
-    ref/index
-    ref/modules/*
-    ref/modules/all/index
-    ref/returners/*
-    ref/returners/all/index
-    ref/states/*
-    ref/states/all/index
-    ref/renderers/*
-    ref/renderers/all/index
-    ref/runners
-    ref/peer
-    ref/syndic
-    ref/python-api
-    ref/file_server/index
-    ref/file_server/file_roots
-    ref/file_server/dynamic-modules
-    ref/configuration/*
-
+    topics/configuration/index
+    topics/using_salt
+    topics/execution/index
+    topics/states/index
+    topics/return_codes/index
+    topics/utils/index
+    topics/event/index
+    topics/orchestrate/index
+    topics/solaris/index
+    topics/ssh/index
+    topics/thorium/index
+    topics/cloud/index
+    topics/proxyminion/index
+    topics/network_automation/index
+    topics/virt/index
     ref/cli/index
-    ref/cli/salt
-    ref/cli/salt-master
-    ref/cli/salt-minion
-    ref/cli/salt-key
-    ref/cli/salt-cp
-    ref/cli/salt-call
-    ref/cli/salt-run
-    ref/cli/salt-syndic
-
-    topics/specs/salt_auth_proto_abs
+    ref/pillar/index
+    ref/tops/index
+    ref/index
+    topics/api
+    topics/topology/index
+    topics/cache/index
+    topics/slots/index
+    topics/windows/index
+    topics/development/index
     topics/releases/index
+    topics/venafi/index
+    glossary

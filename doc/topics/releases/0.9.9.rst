@@ -2,6 +2,8 @@
 Salt 0.9.9 Release Notes
 ========================
 
+:release: 2012-04-27
+
 0.9.9 is out and comes with some serious bug fixes and even more serious
 features. This release is the last major feature release before 1.0.0 and
 could be considered the 1.0.0 release candidate.
@@ -33,7 +35,7 @@ on those changes.
 
 .. code-block:: bash
 
-    # salt \* state.highstate test=True
+    salt '*' state.highstate test=True
 
 Now states that would have made changes report them back in yellow.
 
@@ -96,7 +98,7 @@ easily. A simple example:
       file.present:
         - source: salt://edit/vimrc
 
-This makes the 2 lower state decs inherit the options from thier respectively
+This makes the 2 lower state decs inherit the options from their respectively
 "used" state decs.
 
 Network State
@@ -128,7 +130,7 @@ The original ssh_auth state was limited to accepting only arguments to apply
 to a public key, and the key itself. This was restrictive due to the way the
 we learned that many people were using the state, so the key section has been
 expanded to accept options and arguments to the key that over ride arguments
-passed in the stae. This gives substantial power to using ssh_auth with names:
+passed in the state. This gives substantial power to using ssh_auth with names:
 
 .. code-block:: yaml
 
@@ -230,14 +232,14 @@ testing out the behavior of single states:
 
 .. code-block:: bash
 
-    # salt \* state.single user.present name=wade uid=2000
+    salt '*' state.single user.present name=wade uid=2000
 
 The test interface functions here as well, so changes can also be tested
 against as:
 
 .. code-block:: bash
 
-    # salt \* state.single user.present name=wade uid=2000 test=True
+    salt '*' state.single user.present name=wade uid=2000 test=True
 
 New Tests
 =========
@@ -265,9 +267,9 @@ and then use the minionswarm.py script in the tests directory to spin up
 as many minions as you want. Remember, this is a fork bomb, don't spin up more
 than your hardware can handle!
 
-.. code-block::
+.. code-block:: bash
 
-    # python minionswarm.py -m 20 --master salt-master
+    python minionswarm.py -m 20 --master salt-master
 
 
 Shell Tests
@@ -280,5 +282,5 @@ runners and commands like salt-key.
 Client Tests
 ------------
 
-Tests have been added to test the aspects of the client apis and ensure that
+Tests have been added to test the aspects of the client APIs and ensure that
 the client calls work, and that they manage passed data, in a desirable way.

@@ -1,73 +1,35 @@
-======
-Grains
-======
+.. _targeting-grains:
 
-Salt comes with an interface to derive information about the underlying system.
-This is called the grains interface, because it presents salt with grains of
-information.
+======================
+Targeting using Grains
+======================
 
-The grains interface is made available to Salt modules and components so that
-the right salt minion commands are automatically available on the right
-systems.
+Grain data can be used when targeting minions.
 
-It is important to remember that grains are bits of information loaded when
-the salt minion starts, so this information is static. This means that the
-information in grains is unchanging, therefore the nature of the data is
-static. So grains information are things like the running kernel, or the
-operating system.
+For example, the following matches all CentOS minions:
 
-Match all CentOS minions::
+.. code-block:: bash
 
     salt -G 'os:CentOS' test.ping
 
-Match all minions with 64 bit CPUs and return number of available cores::
+Match all minions with 64-bit CPUs, and return number of CPU cores for each
+matching minion:
+
+.. code-block:: bash
 
     salt -G 'cpuarch:x86_64' grains.item num_cpus
 
-Grains in the Minion Config
-===========================
+Additionally, globs can be used in grain matches, and grains that are nested in
+a dictionary can be matched by adding a colon for each level that is traversed.
+For example, the following will match hosts that have a grain called
+``ec2_tags``, which itself is a dictionary with a key named ``environment``,
+which has a value that contains the word ``production``:
 
-Grains can also be statically assigned within the minion configuration file.
-Just add the option ``grains`` and pass options to it:
+.. code-block:: bash
 
-.. code-block:: yaml
+    salt -G 'ec2_tags:environment:*production*'
 
-    grains:
-      roles:
-        - webserver
-        - memcache
-      deployment: datacenter4
-      cabinet: 13
-      cab_u: 14-15
+.. important::
+  See :ref:`Is Targeting using Grain Data Secure? <faq-grain-security>` for
+  important security information.
 
-Then status data specific to your servers can be retrieved via Salt, or used
-inside of the state system for matching. It also makes targeting, in the case
-of the example above, simply based on specific data about your deployment.
-
-Writing Grains
-==============
-
-Grains are easy to write. The grains interface is derived by executing
-all of the "public" functions found in the modules located in the grains
-package or the custom grains directory. The functions in the modules of
-the grains must return a python dict, where the keys in the dict are the
-names of the grains and the values are the values.
-
-Custom grains should be placed in a ``_grains`` directory located under
-your :conf_master:`file_roots`. Before adding a grain to salt, consider
-what the grain is and remember that grains need to be static data.
-
-Examples of Grains
-------------------
-
-The core module in the grains package is where the main grains are loaded by
-the salt minion and the principal example of how to write grains:
-
-:blob:`salt/grains/core.py`
-
-Syncing Grains
---------------
-
-Syncing grains can be done a number of ways, they are automatically synced when
-state.highstate is called, or the grains can be synced and reloaded by calling
-the saltutil.sync_grains or saltutil.sync_all functions.

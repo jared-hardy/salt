@@ -1,13 +1,29 @@
+# -*- coding: utf-8 -*-
 '''
 Module for gathering and managing information about MooseFS
 '''
+from __future__ import absolute_import, print_function, unicode_literals
+
+# Import salt libs
+import salt.utils.path
+
+
+def __virtual__():
+    '''
+    Only load if the mfs commands are installed
+    '''
+    if salt.utils.path.which('mfsgetgoal'):
+        return 'moosefs'
+    return (False, 'The moosefs execution module cannot be loaded: the mfsgetgoal binary is not in the path.')
 
 
 def dirinfo(path, opts=None):
     '''
     Return information on a directory located on the Moose
 
-    CLI Example::
+    CLI Example:
+
+    .. code-block:: bash
 
         salt '*' moosefs.dirinfo /path/to/dir/ [-[n][h|H]]
     '''
@@ -16,9 +32,9 @@ def dirinfo(path, opts=None):
     if opts:
         cmd += ' -' + opts
     cmd += ' ' + path
-    out = __salt__['cmd.run_all'](cmd)
+    out = __salt__['cmd.run_all'](cmd, python_shell=False)
 
-    output = out['stdout'].split('\n')
+    output = out['stdout'].splitlines()
     for line in output:
         if not line:
             continue
@@ -31,16 +47,18 @@ def fileinfo(path):
     '''
     Return information on a file located on the Moose
 
-    CLI Example::
+    CLI Example:
+
+    .. code-block:: bash
 
         salt '*' moosefs.fileinfo /path/to/dir/
     '''
     cmd = 'mfsfileinfo ' + path
     ret = {}
     chunknum = ''
-    out = __salt__['cmd.run_all'](cmd)
+    out = __salt__['cmd.run_all'](cmd, python_shell=False)
 
-    output = out['stdout'].split('\n')
+    output = out['stdout'].splitlines()
     for line in output:
         if not line:
             continue
@@ -75,7 +93,9 @@ def mounts():
     '''
     Return a list of current MooseFS mounts
 
-    CLI Example::
+    CLI Example:
+
+    .. code-block:: bash
 
         salt '*' moosefs.mounts
     '''
@@ -83,7 +103,7 @@ def mounts():
     ret = {}
     out = __salt__['cmd.run_all'](cmd)
 
-    output = out['stdout'].split('\n')
+    output = out['stdout'].splitlines()
     for line in output:
         if not line:
             continue
@@ -108,7 +128,9 @@ def getgoal(path, opts=None):
     '''
     Return goal(s) for a file or directory
 
-    CLI Example::
+    CLI Example:
+
+    .. code-block:: bash
 
         salt '*' moosefs.getgoal /path/to/file [-[n][h|H]]
         salt '*' moosefs.getgoal /path/to/dir/ [-[n][h|H][r]]
@@ -120,10 +142,10 @@ def getgoal(path, opts=None):
     else:
         opts = ''
     cmd += ' ' + path
-    out = __salt__['cmd.run_all'](cmd)
+    out = __salt__['cmd.run_all'](cmd, python_shell=False)
 
-    output = out['stdout'].split('\n')
-    if not 'r' in opts:
+    output = out['stdout'].splitlines()
+    if 'r' not in opts:
         goal = output[0].split(': ')
         ret = {
             'goal': goal[1],
